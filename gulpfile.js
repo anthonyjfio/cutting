@@ -1,5 +1,6 @@
 var gulp         = require('gulp'),
     gutil        = require('gulp-util'),
+    jade         = require('gulp-jade'),
     stylus       = require('gulp-stylus'),
     fileinclude  = require('gulp-file-include'),
     rename       = require('gulp-rename'),
@@ -31,12 +32,24 @@ gulp.task('fileinclude', function() {
     .pipe(notify({ message: 'Includes: included' }));
 });
 
+gulp.task('jade', function() {
+  return gulp.src(path.join(paths.templates, '*.jade'))
+    .pipe(plumber())
+    .pipe(jade())
+    .pipe(gulp.dest('./build/'))
+    .pipe(livereload(server))
+    .pipe(notify({ message: 'Jade files have reloaded' }));
+});
+
 gulp.task('stylus', function() {
-  return gulp.src(path.join(paths.stylus, '*styl'))
+  return gulp.src(path.join(paths.stylus, '*.styl'))
     .pipe(plumber())
     .pipe(stylus())
-    .pipe(autoprefixer('last 2 version', "> 1%", 'ie 8', 'ie 9'))
-    .pipe(gulp.dest('css'))
+    .pipe(autoprefixer({
+      browsers: ['last 2 version', "> 1%", 'ie 8', 'ie 9'],
+      cascade: false
+      }))
+    .pipe(gulp.dest('./build/css'))
     .pipe(livereload(server))
     .pipe(notify({ message: 'Stylus files have reloaded' }));
 });
