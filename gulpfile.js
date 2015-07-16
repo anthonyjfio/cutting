@@ -15,7 +15,7 @@ var gulp         = require('gulp'),
 
 var paths = {
   templates: './templates/',
-  stylus: './src/**/*.styl'
+  stylus: './src/*.styl'
 };
 
 gulp.task('fileinclude', function() {
@@ -42,6 +42,12 @@ gulp.task('jade', function() {
 });
 
 gulp.task('stylus', function() {
+  gulp.src('./build/main.styl')
+    .pipe(stylus())
+    .pipe(gulp.dest('./build'));
+});
+
+/*gulp.task('stylus', function() {
   return gulp.src(path.join(paths.stylus, '*.styl'))
     .pipe(plumber())
     .pipe(stylus())
@@ -52,7 +58,7 @@ gulp.task('stylus', function() {
     .pipe(gulp.dest('./build/css'))
     .pipe(livereload(server))
     .pipe(notify({ message: 'Stylus files have reloaded' }));
-});
+});*/
 
 gulp.task('connect', function() {
   connect.server({
