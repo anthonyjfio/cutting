@@ -11,13 +11,15 @@ gulp.task('html', function() {
   gulp.src(paths.jadesrc)
     .pipe($.jade({ doctype: 'html' }))
     .on('error', $.util.log)
-    .pipe(gulp.dest('./build'));
+    .pipe(gulp.dest(paths.destination));
 });
 
 gulp.task('css', function() {
   gulp.src(paths.stylussrc)
     .pipe($.stylus({ compress: true }))
+    .pipe($.uncss({ html: ['./build/**/*.html'] }))
     .pipe($.autoprefixer())
+    .pipe($.minifyCss())
     .pipe(gulp.dest(paths.destination));
 });
 
@@ -26,6 +28,6 @@ gulp.task('watch', function() {
   gulp.watch(paths.stylussrc, ['css']);
 });
 
-gulp.task('run', ['html', 'css', 'watch'], function() {
+gulp.task('default', ['html', 'css', 'watch'], function() {
 
 });
