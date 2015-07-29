@@ -1,5 +1,5 @@
-var gulp = require('gulp'),
-    $    = require('gulp-load-plugins')();
+var gulp = require('gulp')
+  , $    = require('gulp-load-plugins')();
 
 var paths = {
   jadesrc: './src/**/*.jade',
@@ -10,6 +10,8 @@ var paths = {
 gulp.task('html', function() {
   gulp.src(paths.jadesrc)
     .pipe($.jade({ doctype: 'html' }))
+    .pipe($.inlineImageHtml('./src'))
+    .pipe($.minifyInline())
     .on('error', $.util.log)
     .pipe(gulp.dest(paths.destination));
 });
