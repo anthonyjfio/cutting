@@ -5,7 +5,7 @@ var gulp = require('gulp')
 var paths = {
   jadesrc: './src/**/*.jade',
   stylussrc: './src/**/*.styl',
-  normalizesrc: './src/css/vendor/normalize-css/normalize.css',
+  vendorsrc: './src/css/vendor/**/*.css',
   imagesrc: [
     './src/**/*.jpeg',
     './src/**/*.jpg',
@@ -28,17 +28,16 @@ gulp.task('html', function() {
 
 gulp.task('css', function() {
 
-  // See todo section of readme for how to use filter
-  // var Filter = $.filter(paths.stylussrc);
+  var Filter = $.filter(['**/*.styl'], {restore: true});
 
   gulp.src([
-      paths.stylussrc,
-      paths.normalizesrc
+      paths.vendorsrc,
+      paths.stylussrc
     ])
-    // .pipe(Filter)
+    .pipe(Filter)
     .pipe($.stylus({ compress: true }))
-    // .pipe(Filter.restore)
-    .pipe($.concat('main.css'))
+    .pipe(Filter.restore)
+    .pipe($.concat('./css/main.css'))
     .pipe($.uncss({ html: ['./build/**/*.html'] }))
     .pipe($.autoprefixer())
     .pipe($.minifyCss())

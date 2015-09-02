@@ -7,15 +7,13 @@
 ### Todo
 
 * ~~Inline critical css~~
-* ~~Preprocess jade and stylus ~~
+* ~~Preprocess jade and stylus~~
 * ~~Autoprefix css~~
 * Minify html and css using multiple processors
 * remove unused css ( double check to ensure possible use with bootstrap and normalize)
 * watch for changes
 * livereload on change
-* add normalize css and use uncss on it
-    * See link below
-* concatenate all css onto one stylesheet
-    * http://stackoverflow.com/questions/25789127/gulp-compile-stylus-and-concat-with-pure-css
+* ~~add normalize css and use uncss on it~~
+* ~~concatenate all css onto one stylesheet~~
 * gulp-cssstats if < 10k use criticalcss else inline whole stylesheet
 * ~~look at https://github.com/addyosmani/critical-path-css-demo gulpfile on how to cache and optimize images~~
