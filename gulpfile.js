@@ -38,9 +38,20 @@ gulp.task('css', function() {
     .pipe($.stylus({ compress: true }))
     .pipe(Filter.restore)
     .pipe($.concat('./css/main.css'))
-    .pipe($.uncss({ html: ['./build/**/*.html'] }))
+    .pipe($.combineMq({ beutify: false }))
+    .pipe($.uncss({
+      html: ['./build/**/*.html'],
+      ignore: [
+        '.fade',
+        '.fade.in',
+        '.collapse',
+        '.collapse.in',
+        '.collapsing',
+        /\.open/
+        ]
+    }))
     .pipe($.autoprefixer())
-    .pipe($.minifyCss())
+    .pipe($.minifyCss({ keepSpecialComments: false }))
     .pipe(gulp.dest(paths.destination));
 });
 
@@ -58,7 +69,7 @@ gulp.task('critical', ['build'], function() {
   critical.generate({
     base: './build/',
     src: 'index.html',
-    dest: './build/critical.html',
+    dest: 'css/main.css',
     minify: true,
     dimensions: [{
       width: 350,

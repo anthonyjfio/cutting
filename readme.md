@@ -10,7 +10,7 @@
 * ~~Preprocess jade and stylus~~
 * ~~Autoprefix css~~
 * Minify html and css using multiple processors
-* remove unused css ( double check to ensure possible use with bootstrap and normalize)
+* ~~remove unused css ( double check to ensure possible use with bootstrap and normalize)~~
 * watch for changes
 * livereload on change
 * ~~add normalize css and use uncss on it~~
