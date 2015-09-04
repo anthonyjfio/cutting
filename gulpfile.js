@@ -1,12 +1,11 @@
 var gulp = require('gulp')
   , critical = require('critical')
   , $    = require('gulp-load-plugins')();
-
+  
 var paths = {
-  jadesrc: './src/**/*.jade',
-  stylussrc: './src/**/*.styl',
-  vendorsrc: './src/css/vendor/**/*.css',
-  imagesrc: [
+  jadeSrc: './src/**/*.jade',
+  stylusSrc: './src/**/*.styl',
+  imageSrc: [
     './src/**/*.jpeg',
     './src/**/*.jpg',
     './src/**/*.svg',
@@ -14,12 +13,11 @@ var paths = {
     './src/**/*.gif'
   ],
   destination: './build/',
-  htmlsrc: './build/index.html',
-  csssrc: './build/css/main.css'
+  normalizeSrc: './src/css/vendor/normalize-css/normalize.css'
 };
 
 gulp.task('html', function() {
-  gulp.src(paths.jadesrc)
+  gulp.src(paths.jadeSrc)
     .pipe($.jade({ doctype: 'html' }))
     .pipe($.minifyInline())
     .on('error', $.util.log)
@@ -31,8 +29,8 @@ gulp.task('css', function() {
   var Filter = $.filter(['**/*.styl'], {restore: true});
 
   gulp.src([
-      paths.vendorsrc,
-      paths.stylussrc
+      paths.normalizeSrc,
+      paths.stylusSrc
     ])
     .pipe(Filter)
     .pipe($.stylus({ compress: true }))
@@ -56,7 +54,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('image', function() {
-  gulp.src(paths.imagesrc)
+  gulp.src(paths.imageSrc)
     .pipe($.imagemin({
       optimizationLevel: 7,
       progressive: true,
@@ -92,15 +90,27 @@ gulp.task('critical', ['build'], function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.jadesrc, ['html']);
-  gulp.watch(paths.stylussrc, ['css']);
+  gulp.watch(paths.jadeSrc, ['html']);
+  gulp.watch(paths.stylusSrc, ['css']);
 });
 
+gulp.task('dev-server', function() {
+  gulp.src(paths.destination)
+    .pipe($.serverLivereload({
+      livereload: true,
+      directoryListing: true,
+      open: true
+    }));
+})
 
 gulp.task('build', ['html', 'css', 'image'], function() {
 
 });
 
-gulp.task('default', ['build', 'critical', 'watch'], function() {
+gulp.task('dev', ['build', 'critical', 'dev-server', 'watch'], function() {
+
+});
+
+gulp.task('default', ['build', 'critical'], function() {
 
 });

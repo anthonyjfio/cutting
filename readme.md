@@ -6,14 +6,7 @@
 
 ### Todo
 
-* ~~Inline critical css~~
-* ~~Preprocess jade and stylus~~
-* ~~Autoprefix css~~
-* Minify html and css using multiple processors
-* ~~remove unused css ( double check to ensure possible use with bootstrap and normalize)~~
-* watch for changes
-* livereload on change
-* ~~add normalize css and use uncss on it~~
-* ~~concatenate all css onto one stylesheet~~
+* ~~watch for changes~~
+* livereload on change (try different livereload server than current; or look into changing settings of current one)
 * gulp-cssstats if < 10k use criticalcss else inline whole stylesheet
-* ~~look at https://github.com/addyosmani/critical-path-css-demo gulpfile on how to cache and optimize images~~
+* possibly add post css
