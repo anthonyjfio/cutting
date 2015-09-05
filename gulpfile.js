@@ -1,5 +1,7 @@
 var gulp = require('gulp')
   , critical = require('critical')
+  , browserSync = require('browser-sync').create()
+  , reload = browserSync.reload
   , $    = require('gulp-load-plugins')();
   
 var paths = {
@@ -25,7 +27,8 @@ gulp.task('html', function() {
     .pipe($.jade({ doctype: 'html' }))
     .pipe($.minifyInline())
     .on('error', $.util.log)
-    .pipe(gulp.dest(paths.destination));
+    .pipe(gulp.dest(paths.destination))
+    .pipe(browserSync.stream({once: true}));
 });
 
 gulp.task('css', function() {
@@ -54,7 +57,8 @@ gulp.task('css', function() {
     }))
     .pipe($.autoprefixer())
     .pipe($.minifyCss({ keepSpecialComments: false }))
-    .pipe(gulp.dest(paths.destination));
+    .pipe(gulp.dest('./'))
+    .pipe(browserSync.stream({once: true}));
 });
 
 gulp.task('image', function() {
@@ -93,35 +97,21 @@ gulp.task('critical', ['build'], function() {
   })
 });
 
-gulp.task('watch', function() {
-  gulp.watch(paths.jadeSrc, ['build', 'critical', 'reload']);
-  gulp.watch(paths.stylusSrc, ['build', 'critical', 'reload']); 
-});
-
-gulp.task('reload', function() {
-  gulp.src('')
-    .pipe($.connect.reload())
-});
-
-// gulp.task('dev-server', function() {
-//   gulp.src(paths.destination)
-//     .pipe($.serverLivereload({
-//       livereload: true,
-//       open: true
-//     }));
-// })
 gulp.task('dev-server', function() {
-  $.connect.server({
-    livereload: true,
-    root: paths.destination
+  browserSync.init({
+    server: paths.destination
   });
+
+  gulp.watch(paths.jadeSrc, ['build', 'critical']);
+  gulp.watch(paths.stylusSrc, ['build', 'critical']);
 });
+
 
 gulp.task('build', ['html', 'css', 'image'], function() {
 
 });
 
-gulp.task('dev', ['build', 'critical', 'dev-server', 'watch'], function() {
+gulp.task('dev', ['build', 'critical', 'dev-server'], function() {
 
 });
 

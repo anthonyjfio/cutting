@@ -5,7 +5,8 @@
 [Better ref article](https://www.codementor.io/development-process/tutorial/how-to-set-up-gulp-beginner-guide)
 
 ### Todo
-* fix livereload server
-* clean up package.json
+* fix order of imports in index.styl
+* find a way to stop critical from generating mysterious `css` folder
+
 * gulp-cssstats if < 10k use criticalcss else inline whole stylesheet
 * possibly add post css
