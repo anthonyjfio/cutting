@@ -6,7 +6,5 @@
 
 ### Todo
 
-* ~~watch for changes~~
-* livereload on change (try different livereload server than current; or look into changing settings of current one)
 * gulp-cssstats if < 10k use criticalcss else inline whole stylesheet
 * possibly add post css

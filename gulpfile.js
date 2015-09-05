@@ -12,8 +12,11 @@ var paths = {
     './src/**/*.png',
     './src/**/*.gif'
   ],
-  destination: './build/',
+  destination: './build',
   normalizeSrc: './src/css/vendor/normalize-css/normalize.css'
+  // If adding addition css resources add them to the line below
+  // And don't forget to add a comment after `normalize.css'`
+
 };
 
 gulp.task('html', function() {
@@ -98,7 +101,6 @@ gulp.task('dev-server', function() {
   gulp.src(paths.destination)
     .pipe($.serverLivereload({
       livereload: true,
-      directoryListing: true,
       open: true
     }));
 })
