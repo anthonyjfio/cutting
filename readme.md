@@ -6,6 +6,6 @@
 
 ### Todo
 * fix livereload server
-
+* clean up package.json
 * gulp-cssstats if < 10k use criticalcss else inline whole stylesheet
 * possibly add post css
