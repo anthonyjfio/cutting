@@ -13,6 +13,7 @@ var paths = {
     './src/**/*.gif'
   ],
   destination: './build',
+  cssSrc: './build/css/main.css',
   normalizeSrc: './src/css/vendor/normalize-css/normalize.css'
   // If adding addition css resources add them to the line below
   // And don't forget to add a comment after `normalize.css'`
@@ -38,8 +39,8 @@ gulp.task('css', function() {
     .pipe(Filter)
     .pipe($.stylus({ compress: true }))
     .pipe(Filter.restore)
-    .pipe($.concat('./css/main.css'))
-    .pipe($.combineMq({ beutify: false }))
+    .pipe($.concat(paths.cssSrc))
+    .pipe($.combineMq({ beatify: false }))
     .pipe($.uncss({
       html: ['./build/**/*.html'],
       ignore: [
@@ -93,8 +94,8 @@ gulp.task('critical', ['build'], function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.jadeSrc, ['html']);
-  gulp.watch(paths.stylusSrc, ['css']);
+  gulp.watch(paths.jadeSrc, ['build', 'critical']);
+  gulp.watch(paths.stylusSrc, ['build', 'critical']);
 });
 
 gulp.task('dev-server', function() {

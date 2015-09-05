@@ -5,6 +5,7 @@
 [Better ref article](https://www.codementor.io/development-process/tutorial/how-to-set-up-gulp-beginner-guide)
 
 ### Todo
+* fix livereload server
 
 * gulp-cssstats if < 10k use criticalcss else inline whole stylesheet
 * possibly add post css
