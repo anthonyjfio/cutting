@@ -1,5 +1,6 @@
 var gulp = require('gulp')
   , critical = require('critical')
+  , del = require('del')
   , browserSync = require('browser-sync').create()
   , reload = browserSync.reload
   , $    = require('gulp-load-plugins')();
@@ -15,11 +16,7 @@ var paths = {
     './src/**/*.gif'
   ],
   destination: './build',
-  cssSrc: './build/css/main.css',
-  normalizeSrc: './src/css/vendor/normalize-css/normalize.css'
-  // If adding addition css resources add them to the line below
-  // And don't forget to add a comment after `normalize.css'`
-
+  cssSrc: './build/css/main.css'
 };
 
 gulp.task('html', function() {
@@ -32,16 +29,11 @@ gulp.task('html', function() {
 });
 
 gulp.task('css', function() {
-
-  var Filter = $.filter(['**/*.styl'], {restore: true});
-
-  gulp.src([
-      paths.normalizeSrc,
-      paths.stylusSrc
-    ])
-    .pipe(Filter)
-    .pipe($.stylus({ compress: true }))
-    .pipe(Filter.restore)
+  gulp.src(paths.stylusSrc)
+    .pipe($.stylus({
+      'include css': true,
+      compress: true
+    }))
     .pipe($.concat(paths.cssSrc))
     .pipe($.combineMq({ beatify: false }))
     .pipe($.uncss({
@@ -75,7 +67,7 @@ gulp.task('critical', ['build'], function() {
   critical.generate({
     base: './build/',
     src: 'index.html',
-    dest: 'css/main.css',
+    dest: 'tmp/main.css',
     minify: true,
     dimensions: [{
       width: 350,
@@ -97,13 +89,17 @@ gulp.task('critical', ['build'], function() {
   })
 });
 
-gulp.task('dev-server', function() {
+gulp.task('clean:tmp', function() {
+  del('tmp');
+});
+
+gulp.task('dev-server', ['default', 'critical'], function() {
   browserSync.init({
     server: paths.destination
   });
 
-  gulp.watch(paths.jadeSrc, ['build', 'critical']);
-  gulp.watch(paths.stylusSrc, ['build', 'critical']);
+  gulp.watch(paths.jadeSrc, ['default']);
+  gulp.watch(paths.stylusSrc, ['default']);
 });
 
 
@@ -115,6 +111,6 @@ gulp.task('dev', ['build', 'critical', 'dev-server'], function() {
 
 });
 
-gulp.task('default', ['build', 'critical'], function() {
+gulp.task('default', ['build', 'critical', 'clean:tmp'], function() {
 
 });
