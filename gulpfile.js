@@ -39,6 +39,11 @@ gulp.task('css', function() {
     .pipe($.uncss({
       html: ['./build/**/*.html'],
       ignore: [
+        'a:link',
+        'a:hover',
+        'a:focus',
+        'a:active',
+        'a:visited',
         '.fade',
         '.fade.in',
         '.collapse',
